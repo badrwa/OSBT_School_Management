@@ -9,14 +9,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+
 namespace School_Management
 {
     public partial class Sign_up : Form
     {
+
         public Sign_up()
         {
             InitializeComponent();
         }
+        string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=OSBT Management;Integrated Security=True";
+        SqlConnection connection;
+        SqlCommand Command;
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -35,13 +41,13 @@ namespace School_Management
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new Login().Show();
+            new Home().Show();
             this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-/*            try
+            try
             {
                 if (txtfn.Text != "" && txtln.Text != "" && txtbd.Text != "" && txtg.Text != "" && txtc.Text != "" && txts.Text != "" && txtt.Text != "" && txta.Text != "" &&
                     txte.Text != "" && txtp.Text != "" && txtcp.Text != "")
@@ -65,7 +71,7 @@ namespace School_Management
 
                             command.Parameters.AddWithValue("@email", txte.Text);
                             command.Parameters.AddWithValue("@password", txtp.Text);
-                            command.ExecuteScalar();
+                            command.ExecuteNonQuery();
                             connection.Close();
                             MessageBox.Show("Register Succesfully!");
                             txtfn.Text = "";
@@ -100,18 +106,18 @@ namespace School_Management
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }
         }
-        /*   int check(string email)
+           int check(string email)
   {
       connection = new SqlConnection(connectionString);
       connection.Open();
       string query = "select count(*) from tblregister where email= '" + email + "'";
       SqlCommand command = new SqlCommand(query, connection);
       int v = (int)command.ExecuteScalar();
-      connection.Close();
+         connection.Close();
       return v;
-  }*/
+  }
         private void txtsm_CheckedChanged(object sender, EventArgs e)
         {
             if (txtsm.Checked)

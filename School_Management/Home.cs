@@ -12,6 +12,8 @@ namespace School_Management
 {
     public partial class Home : Form
     {
+        private int receivedId;
+
         public Home()
         {
             InitializeComponent();
@@ -40,7 +42,7 @@ namespace School_Management
 
         private void label9_Click(object sender, EventArgs e)
         {
-            new Class().Show();
+            new Class(receivedId).Show();
             this.Hide();
         }
     }

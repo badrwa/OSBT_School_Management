@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace School_Management
@@ -17,10 +10,18 @@ namespace School_Management
         {
             InitializeComponent();
         }
+        string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=OSBT Management;Integrated Security=True";
+        SqlConnection connection;
+        SqlCommand Command;
+
+
 
         private void label13_Click(object sender, EventArgs e)
         {
             Close();
+
+
+
         }
 
         private void txtsm_CheckedChanged(object sender, EventArgs e)
@@ -28,7 +29,6 @@ namespace School_Management
             if (txtsm.Checked)
             {
                 txtp.PasswordChar = '\0';
-
 
             }
             else
@@ -40,31 +40,44 @@ namespace School_Management
 
         private void button1_Click(object sender, EventArgs e)
         {
-/*            if (txte.Text != "" && txtp.Text != "")
+            if (txte.Text != "" && txtp.Text != "")
             {
-
-                connection = new SqlConnection(connectionString);
-                connection.Open();
-                string query = "select count(*) from tblregister where email= '" + txte.Text + "' and password='" + txtp.Text + "'";
-                SqlCommand command = new SqlCommand(query, connection);
-                int v = (int)command.ExecuteScalar();
-                connection.Close();
-                if (v != 1)
+                using (connection = new SqlConnection(connectionString))
                 {
-                    MessageBox.Show("Error email or password", "Error!");
-                }
-                else
-                {
-                    //    MessageBox.Show("Welcome to your profile!");
-                    new Home().Show();
-                    this.Hide();
+                    connection.Open();
 
+                    // Use a SELECT statement to retrieve the id based on email and password
+                    string query = "SELECT id FROM tblregister WHERE email = @email AND password = @password";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@email", txte.Text);
+                    command.Parameters.AddWithValue("@password", txtp.Text);
+
+                    // ExecuteScalar to retrieve the id
+                    object result = command.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        int id = (int)result;
+
+                        // Close the connection after retrieving the id
+                        connection.Close();
+
+                        Class.Show(id);
+
+                        // MessageBox.Show("Welcome to your profile!");
+                        new Home().Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid email or password", "Error!");
+                    }
                 }
             }
             else
             {
                 MessageBox.Show("Fill the blanks!");
-            }*/
+            }
         }
     }
 }

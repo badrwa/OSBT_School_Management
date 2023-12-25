@@ -13,9 +13,27 @@ namespace School_Management
 {
     public partial class Class : Form
     {
-        public Class()
+        private int receivedId; // Declare a field to store the received id
+
+        public Class(int id)
         {
             InitializeComponent();
+            receivedId = id;
+
+
+        }
+
+
+
+        string connectionString = "Data Source=localhost\\sqlexpress;Initial Catalog=OSBT Management;Integrated Security=True";
+        SqlConnection connection;
+        SqlCommand command;
+
+
+        public static void Show(int id)
+        {
+            // Use the id as needed in the Class page
+            MessageBox.Show($"Received id in Class: {id}");
         }
 
         private void label11_Click(object sender, EventArgs e)
@@ -25,7 +43,7 @@ namespace School_Management
 
         private void button1_Click(object sender, EventArgs e)
         {
-           /* try
+           try
             {
                 if (txtfn.Text != "" && txtln.Text != "" && txtbd.Text != "" && txtg.Text != "" && txta.Text != "" && txtt.Text != "" && txte.Text != "" && txtal.Text != "" &&
                     txtc.Text != "" && txts.Text != "")
@@ -36,7 +54,8 @@ namespace School_Management
                     {
                         connection = new SqlConnection(connectionString);
                         connection.Open();
-                        SqlCommand command = new SqlCommand("insert into tblstudent values(@f_name,@l_name,@b_day,@gender,@address,@tel,@email,@academic_level,@class,@subject,@note_end)", connection);
+                        SqlCommand command = new SqlCommand("insert into tblstudent values(@f_name,@l_name,@b_day,@gender,@address,@tel,@email,@academic_level,@class,@subject,@f_point,@id_prof)", connection);
+
                         command.Parameters.AddWithValue("@f_name", txtfn.Text);
                         command.Parameters.AddWithValue("@l_name", txtln.Text);
                         command.Parameters.AddWithValue("@b_day", Convert.ToDateTime(txtbd.Text));
@@ -47,9 +66,9 @@ namespace School_Management
                         command.Parameters.AddWithValue("@academic_level", txtal.Text);
                         command.Parameters.AddWithValue("@class", txtc.Text);
                         command.Parameters.AddWithValue("@subject", txts.Text);
-                        command.Parameters.AddWithValue("@f_point", txtgp.Text);
-
-                        command.ExecuteScalar();
+                        command.Parameters.AddWithValue("@f_point", float.Parse(txtgp.Text));
+                        command.Parameters.AddWithValue("@id_prof", receivedId);
+                        command.ExecuteNonQuery();
                         connection.Close();
                         MessageBox.Show("Register Succesfully!");
                         txtfn.Text = "";
@@ -80,9 +99,9 @@ namespace School_Management
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }
         }
-/*        int check(string email)
+        int check(string email)
         {
             connection = new SqlConnection(connectionString);
             connection.Open();
@@ -91,7 +110,7 @@ namespace School_Management
             int v = (int)command.ExecuteScalar();
             connection.Close();
             return v;
-        }*/
+        }
 
         private void label12_Click(object sender, EventArgs e)
         {
