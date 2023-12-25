@@ -60,7 +60,6 @@ namespace School_Management
                     this.Hide();
 
                 }
-
             }
             else
             {
